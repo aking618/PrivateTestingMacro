@@ -13,5 +13,5 @@
 ///     public func testableMyMethod(_ foo: Int) -> Int {
 ///         myMethod(foo)
 ///     }
-@attached(peer, names: overloaded)
+@attached(peer, names: arbitrary)
 public macro Testable() = #externalMacro(module: "PrivateTestingMacroMacros", type: "TestablePeerMacro")

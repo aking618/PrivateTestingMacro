@@ -36,7 +36,7 @@ class MyClassTests: XCTestCase {
 }
 ```
 
-Note: The `@PrivateTesting` macro can only be used on functions that are private. If you try to use it on a function that is not private, you will get a compile-time error.
+Note: The `@PrivateTestable` macro can only be used on functions that are private. If you try to use it on a function that is not private, you will get a compile-time error.
 
 ## License
 

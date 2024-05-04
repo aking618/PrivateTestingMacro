@@ -22,7 +22,7 @@ Swift Macro that automatically generates a public version of a private function 
 import PrivateTestingMacro
 
 class MyClass {
-    @PrivateTesting
+    @PrivateTestable
     private func privateFunction() {
         print("Hello, World!")
     }

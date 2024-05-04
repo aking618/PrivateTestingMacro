@@ -4,14 +4,12 @@ import SwiftSyntaxMacros
 import SwiftSyntaxMacrosTestSupport
 import XCTest
 
-@testable import PrivateTestingMacroClient
-
 // Macro implementations build for the host, so the corresponding module is not available when cross-compiling. Cross-compiled tests may still make use of the macro itself in end-to-end tests.
 #if canImport(PrivateTestingMacroMacros)
 import PrivateTestingMacroMacros
 
 let testMacros: [String: Macro.Type] = [
-    "Testable": TestablePeerMacro.self,
+    "PrivateTestable": PrivateTestablePeerMacro.self,
 ]
 #endif
 
@@ -21,7 +19,7 @@ final class PrivateTestingMacroTests: XCTestCase {
         #if canImport(PrivateTestingMacroMacros)
         assertMacroExpansion(
             """
-            @Testable
+            @PrivateTestable
             private func myMethod() -> String {
                 "Hello"
             }
@@ -32,6 +30,7 @@ final class PrivateTestingMacroTests: XCTestCase {
             }
             
             #if TESTING
+            /// Testing wrapper for myMethod.
             public func testableMyMethod() -> String {
                 myMethod()
             }
@@ -48,7 +47,7 @@ final class PrivateTestingMacroTests: XCTestCase {
         #if canImport(PrivateTestingMacroMacros)
         assertMacroExpansion(
             """
-            @Testable
+            @PrivateTestable
             private func myMethod() {
                 
             }
@@ -59,6 +58,7 @@ final class PrivateTestingMacroTests: XCTestCase {
             }
             
             #if TESTING
+            /// Testing wrapper for myMethod.
             public func testableMyMethod() {
                 myMethod()
             }
@@ -75,7 +75,7 @@ final class PrivateTestingMacroTests: XCTestCase {
         #if canImport(PrivateTestingMacroMacros)
         assertMacroExpansion(
             """
-            @Testable
+            @PrivateTestable
             private func myMethod(_ value: Int) -> Int {
                 value
             }
@@ -86,6 +86,7 @@ final class PrivateTestingMacroTests: XCTestCase {
             }
             
             #if TESTING
+            /// Testing wrapper for myMethod.
             public func testableMyMethod(_ value: Int) -> Int {
                 myMethod(value)
             }
@@ -102,7 +103,7 @@ final class PrivateTestingMacroTests: XCTestCase {
         #if canImport(PrivateTestingMacroMacros)
         assertMacroExpansion(
             """
-            @Testable
+            @PrivateTestable
             private func myMethod(with value: Int) -> Int {
                 value
             }
@@ -113,6 +114,7 @@ final class PrivateTestingMacroTests: XCTestCase {
             }
             
             #if TESTING
+            /// Testing wrapper for myMethod.
             public func testableMyMethod(with value: Int) -> Int {
                 myMethod(with: value)
             }
@@ -129,7 +131,7 @@ final class PrivateTestingMacroTests: XCTestCase {
         #if canImport(PrivateTestingMacroMacros)
         assertMacroExpansion(
             """
-            @Testable
+            @PrivateTestable
             private func myMethod(value: Int) -> Int {
                 value
             }
@@ -140,6 +142,7 @@ final class PrivateTestingMacroTests: XCTestCase {
             }
             
             #if TESTING
+            /// Testing wrapper for myMethod.
             public func testableMyMethod(value: Int) -> Int {
                 myMethod(value: value)
             }
@@ -156,7 +159,7 @@ final class PrivateTestingMacroTests: XCTestCase {
         #if canImport(PrivateTestingMacroMacros)
         assertMacroExpansion(
             """
-            @Testable
+            @PrivateTestable
             private func myMethod<T:Hashable>(_ value: T) -> T {
                 T
             }
@@ -167,6 +170,7 @@ final class PrivateTestingMacroTests: XCTestCase {
             }
             
             #if TESTING
+            /// Testing wrapper for myMethod.
             public func testableMyMethod<T: Hashable>(_ value: T) -> T {
                 myMethod(value)
             }
@@ -183,7 +187,7 @@ final class PrivateTestingMacroTests: XCTestCase {
         #if canImport(PrivateTestingMacroMacros)
         assertMacroExpansion(
             """
-            @Testable
+            @PrivateTestable
             private func myMethod(param1: Int, param2 value: Int, _ param3: Int) -> Int {
                 param1 + value + param3
             }
@@ -194,6 +198,7 @@ final class PrivateTestingMacroTests: XCTestCase {
             }
             
             #if TESTING
+            /// Testing wrapper for myMethod.
             public func testableMyMethod(param1: Int, param2 value: Int, _ param3: Int) -> Int {
                 myMethod(param1: param1, param2: value, param3)
             }
@@ -210,7 +215,7 @@ final class PrivateTestingMacroTests: XCTestCase {
         #if canImport(PrivateTestingMacroMacros)
         assertMacroExpansion(
             """
-            @Testable
+            @PrivateTestable
             private func myMethod() async {
                 
             }
@@ -221,6 +226,7 @@ final class PrivateTestingMacroTests: XCTestCase {
             }
             
             #if TESTING
+            /// Testing wrapper for myMethod.
             public func testableMyMethod() async {
                 await myMethod()
             }
@@ -237,7 +243,7 @@ final class PrivateTestingMacroTests: XCTestCase {
         #if canImport(PrivateTestingMacroMacros)
         assertMacroExpansion(
             """
-            @Testable
+            @PrivateTestable
             private func myMethod() throws {
                 
             }
@@ -248,6 +254,7 @@ final class PrivateTestingMacroTests: XCTestCase {
             }
             
             #if TESTING
+            /// Testing wrapper for myMethod.
             public func testableMyMethod() throws {
                 try myMethod()
             }
@@ -264,7 +271,7 @@ final class PrivateTestingMacroTests: XCTestCase {
         #if canImport(PrivateTestingMacroMacros)
         assertMacroExpansion(
             """
-            @Testable
+            @PrivateTestable
             private func myMethod() async throws {
                 
             }
@@ -275,6 +282,7 @@ final class PrivateTestingMacroTests: XCTestCase {
             }
             
             #if TESTING
+            /// Testing wrapper for myMethod.
             public func testableMyMethod() async throws {
                 try await myMethod()
             }

@@ -1,6 +1,8 @@
 import PrivateTestingMacro
 
-@Testable
-private func performHiddenLogic(on value: Int) -> Int {
-    return value * value
+enum Test {
+    @PrivateTestable
+    private func performHiddenLogic(on value: Int) -> Int {
+        return value * value
+    }
 }
